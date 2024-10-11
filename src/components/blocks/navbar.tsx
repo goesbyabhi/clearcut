@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { LogInIcon } from "lucide-react"
-import { Button } from "./button"
+import { Button } from "@/components/ui/button"
 
 export function Navbar() {
 	return (

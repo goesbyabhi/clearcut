@@ -1,10 +1,10 @@
-import { Navbar, Hero } from "@/components";
+import { Navbar, Hero, Features } from "@/components";
 export default function Home() {
 	return (
 		<>
-			<div className="flex flex-col items-center">
-				<Navbar />
+			<div className="flex bg-black flex-col items-center">
 				<Hero />
+				<Features />
 			</div>
 		</>
 	);

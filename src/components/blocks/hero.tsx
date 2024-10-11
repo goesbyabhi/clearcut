@@ -1,11 +1,11 @@
 "use client";
 import { useEffect } from "react";
-import { Spotlight } from "./spotlight";
-import { ImageCompare } from "./image-compare";
+import { Spotlight } from "@/components/ui/spotlight";
+import { ImageCompare } from "@/components/ui/image-compare";
 import { ChevronRightIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "./button";
+import { Button } from "@/components/ui/button";
 
 const Star = () => (
 	<svg viewBox="0 0 512 512">
@@ -42,7 +42,7 @@ export function Hero() {
 		<div className="h-[50rem] w-full flex md:items-center md:justify-center bg-black/[0.96] antialiased bg-grid-violet-400/[0.4] relative overflow-hidden animate-gridbg">
 			<Spotlight
 				className="-top-40 md:right-10 md:-top-20 z-10"
-				fill="white"
+				fill="rgb(180, 180, 180)"
 			/>
 			<div className="absolute pointer-events-none inset-0 flex items-end justify-center  dark:bg-black bg-white [mask-image:radial-gradient(ellipse_70%_100%_at_72%_49%,transparent_10%,black_35%)]"></div>
 			<div className="p-4 md:max-w-[69%] mx-5 relative flex items-center justify-between w-full pt-40 md:pt-0">
@@ -72,16 +72,17 @@ export function Hero() {
 						</span>
 					</p>
 					<div className="mt-6 inline-flex items-center gap-x-4">
-						<button className="inline-flex animate-shimmer h-12 items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#393BB2,45%,#E2CBFF,55%,#393BB2)] bg-[length:200%_100%] px-6 font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-							<Image
-								src="/Logo.png"
-								alt="Icon"
-								width={25}
-								height={25}
-							/>
-							Try ClearCut Now
-						</button>
-						<Button asChild size={"lg"} variant={"invisible"}><Link href="/register" className="inline-flex h-12 items-center gap-x-2 "><p className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-white bg-200%">How it works</p><ChevronRightIcon color="#ebd9fe" /></Link></Button>
+						<div className="relative group">
+							<div className="transition-shadow duration-500 ease-in-out group-hover:shadow-[0_0px_30px_0px_rgba(103,58,183,0.6)]">
+								<Link href="/Upload">
+									<button className="inline-flex animate-shimmer h-12 items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#393BB2,45%,#E2CBFF,55%,#393BB2)] bg-[length:200%_100%] px-6 font-bold text-white focus:outline-none">
+										{/*<Image src="/Logo.png" alt="Icon" width={25} height={25} /> */}
+										Try ClearCut Now
+									</button>
+								</Link>
+							</div>
+						</div>
+						<Button asChild size={"lg"} variant={"invisible"} className=" transform transition-transform duration-300 ease-in-out hover:scale-110"><Link href="/register" className="inline-flex h-12 items-center gap-x-2 "><p className="bg-clip-text font-bold text-transparent bg-gradient-to-r from-purple-400 to-white bg-200%">How it works</p><ChevronRightIcon color="#ebd9fe" /></Link></Button>
 					</div>
 				</div>
 				<div className="hidden xl:block">
