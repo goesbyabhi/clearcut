@@ -31,11 +31,15 @@ export const FileUpload = ({
   onChange?: (files: File[]) => void;
 }) => {
   const [files, setFiles] = useState<File[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (newFiles: File[]) => {
-    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-    onChange && onChange(newFiles);
+    const singleFile = newFiles.slice(0, 1);
+    setFiles(singleFile);
+    onChange && onChange(singleFile);
+    setDownloadUrl(null);
   };
 
   const handleClick = () => {
@@ -44,12 +48,45 @@ export const FileUpload = ({
 
   const { getRootProps, isDragActive } = useDropzone({
     multiple: false,
+    accept: {
+      "image/*": [],
+    },
     noClick: true,
     onDrop: handleFileChange,
     onDropRejected: (error) => {
       console.log(error);
     },
   });
+
+  const handleUpload = async () => {
+    if (files.length === 0) return;
+
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.append("file", files[0]);
+
+    try {
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        throw Error("Failed to upload file");
+      }
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      setDownloadUrl(url);
+
+      // window.open(url);
+    } catch (error) {
+      console.error("Error uploading file: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="w-full" {...getRootProps()}>
@@ -62,6 +99,8 @@ export const FileUpload = ({
           ref={fileInputRef}
           id="file-upload-handle"
           type="file"
+          accept="image/*"
+          multiple={false}
           onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
           className="hidden"
         />
@@ -83,7 +122,7 @@ export const FileUpload = ({
                   layoutId={idx === 0 ? "file-upload" : "file-upload-" + idx}
                   className={cn(
                     "relative overflow-hidden z-40 bg-white dark:bg-neutral-900 flex flex-col items-start justify-start md:h-24 p-4 mt-4 w-full mx-auto rounded-md",
-                    "shadow-sm"
+                    "shadow-sm",
                   )}
                 >
                   <div className="flex justify-between w-full items-center gap-4">
@@ -137,7 +176,7 @@ export const FileUpload = ({
                 }}
                 className={cn(
                   "relative group-hover/file:shadow-2xl z-40 bg-white dark:bg-neutral-900 flex items-center justify-center h-32 mt-4 w-full max-w-[8rem] mx-auto rounded-md",
-                  "shadow-[0px_10px_50px_rgba(0,0,0,0.1)]"
+                  "shadow-[0px_10px_50px_rgba(0,0,0,0.1)]",
                 )}
               >
                 {isDragActive ? (
@@ -164,6 +203,35 @@ export const FileUpload = ({
           </div>
         </div>
       </motion.div>
+
+      <div className="flex justify-center items-center mt-6 mb-6">
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          files.length > 0 && (
+            <motion.button
+              onClick={handleUpload}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+              className="px-8 py-2 rounded-full bg-gradient-to-b from-blue-500 to-blue-600 text-white focus:ring-2 focus:ring-blue-400 hover:shadow-xl transition duration-200"
+            >
+              Upload
+            </motion.button>
+          )
+        )}
+      </div>
+      {downloadUrl && (
+        <div className="flex justify-center items-center mt-6 mb-6">
+          <a
+            href={downloadUrl}
+            download={files[0].name}
+            className="px-8 py-2 rounded-full bg-gradient-to-b from-green-500 to-green-600 text-white focus:ring-2 focus:ring-green-400 hover:shadow-xl transition duration-200"
+          >
+            Download Processed Image
+          </a>
+        </div>
+      )}
     </div>
   );
 };
@@ -172,7 +240,7 @@ export function GridPattern() {
   const columns = 41;
   const rows = 11;
   return (
-    <div className="flex bg-gray-100 dark:bg-neutral-900 flex-shrink-0 flex-wrap justify-center items-center gap-x-px gap-y-px  scale-105">
+    <div className="flex bg-gray-100 dark:bg-neutral-900 flex-shrink-0 flex-wrap justify-center items-center gap-x-px gap-y-px scale-105">
       {Array.from({ length: rows }).map((_, row) =>
         Array.from({ length: columns }).map((_, col) => {
           const index = row * columns + col;
@@ -186,7 +254,7 @@ export function GridPattern() {
               }`}
             />
           );
-        })
+        }),
       )}
     </div>
   );

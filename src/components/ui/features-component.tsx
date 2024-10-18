@@ -17,23 +17,23 @@ export default function FeaturesSectionBlock() {
 				"ClearCut is powered by the latest AI technology, aiming to provide the best experience for users from various domains.",
 			skeleton: <SkeletonTwo />,
 			className:
-				"col-span-1 lg:col-span-4 font-bold border-b lg:border-r dark:border-neutral-800",
+				"col-span-1 lg:col-span-4 font-bold border-b lg:border-r dark:border-neutral-800 lg:border-r font-bold dark:border-neutral-800"
 		},
 		{
 			title: "Privacy First",
 			description:
-				"Your data is yours. We don't store any of your data. Period. Also it's too expensive (pls hire me)",
+				"Your data is yours. We don't store any of your data. Period.",
 			skeleton: <SkeletonOne />,
 			className: "border-b col-span-1 font-bold lg:col-span-2 dark:border-neutral-800",
 		},
-		{
-			title: "Batch Processing",
-			description:
-				"Save time by processing multiple images at once. ClearCut allows you to upload and remove backgrounds from several images simultaneously, making it ideal for businesses and creatives with high workloads.",
-			skeleton: <SkeletonThree />,
-			className:
-				"col-span-1 lg:col-span-3 lg:border-r font-bold dark:border-neutral-800",
-		},
+		// {
+		// 	title: "Batch Processing",
+		// 	description:
+		// 		"Save time by processing multiple images at once. ClearCut allows you to upload and remove backgrounds from several images simultaneously, making it ideal for businesses and creatives with high workloads.",
+		// 	skeleton: <SkeletonThree />,
+		// 	className:
+		// 		"col-span-1 lg:col-span-3 lg:border-r font-bold dark:border-neutral-800",
+		// },
 		// {
 		// title: "Fast and Accurate Results:",
 		// description:
