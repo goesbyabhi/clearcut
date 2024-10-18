@@ -1,1 +1,11 @@
-Star by Ali Coşkun from <a href="https://thenounproject.com/browse/icons/term/star/" target="_blank" title="Star Icons">Noun Project</a> (CC BY 3.0)
+# Clearcut
+
+Clearcut is a simple background removal tool that uses rembg to remove the background.
+
+Built upon:-
+
+- rembg
+- NextJS
+- TailwindCSS
+- Shadcn
+- Aceternity ui
