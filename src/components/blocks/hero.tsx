@@ -104,7 +104,7 @@ export function Hero() {
               className=" transform transition-transform duration-300 ease-in-out hover:scale-110"
             >
               <Link
-                href="/register"
+                href="/bts"
                 className="inline-flex h-12 items-center gap-x-2 "
               >
                 <p className="bg-clip-text font-bold text-transparent bg-gradient-to-r from-purple-400 to-white bg-200%">
